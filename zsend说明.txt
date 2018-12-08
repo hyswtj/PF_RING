@@ -1,0 +1,21 @@
+PFRING_ZC发包实例：
+1、代码准备：
+git clone https://github.com/ntop/PF_RING.git
+2、编译内核
+cd PF_RING/kernel
+make
+sudo insmod ./pf_ring.ko
+3、编译和加载ZC驱动：
+cd ../drivers/intel
+make
+cd ixgbe/ixgbe-*-zc/src
+sudo ./load_driver.sh
+4、编译用户态程序：
+cd ../userland
+make
+5、zsend发包
+sudo ~/PF_RING/userland/examples_zc/zsend -i zc:p3p2 -f ~/tcp-1.pcap -r 10 -n 0
+zc:p3p2是发包的网口名加前缀zc:，ifconfig看到的还是网口名，
+-f指定发送的pcap报文
+-r只发送速率，10就是10G
+-n是发送的报文数，0就是一直发送。
